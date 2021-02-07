@@ -1,10 +1,15 @@
 from card_parsing.read_cards import parse_cards
 from output_utils.generate_worksheet import generate_worksheet
 from output_utils.worksheet_headers import batter_headers, pitcher_headers, data_headers, batter_freeze_col, pitcher_freeze_col, data_freeze_col, data_hidden_columns, batter_hidden_columns, pitcher_hidden_columns
+from stats.babip.calculate_babip import calculate_babips
 
 import xlsxwriter
 
 cards = parse_cards()
+
+# Perform analysis here.
+# Calculate in BABIP
+calculate_babips(cards)
 
 pitcher_cards = []
 batter_cards = []
@@ -16,8 +21,6 @@ for card in cards:
     # All batters and pitchers who have overall contact higher than 40
     if ((card["position"] != "SP" and card["position"] != "RP" and card["position"] != "CL") or card["con"] > 40) and "-rp" not in str(card["t_CID"]) and "-sp" not in str(card["t_CID"]):
         batter_cards.append(card)
-
-# Perform analysis here.
 
 # Create sheet
 workbook = xlsxwriter.Workbook('output/PTSheet.xlsx')
