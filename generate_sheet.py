@@ -2,14 +2,29 @@ from card_parsing.read_cards import parse_cards
 from output_utils.generate_worksheet import generate_worksheet
 from output_utils.worksheet_headers import batter_headers, pitcher_headers, data_headers, batter_freeze_col, pitcher_freeze_col, data_freeze_col, data_hidden_columns, batter_hidden_columns, pitcher_hidden_columns
 from stats.babip.calculate_babip import calculate_babips
+from stats.woba.calculate_woba import get_woba_factors
+from data_parsing.read_db import read_files_to_db
 
 import xlsxwriter
+
+configuration = {
+    "min_level": "I",
+    "min_year": 2020,
+    # TODO half-implemented tourney mode - will fill out later
+    "tourney_mode": False
+}
 
 cards = parse_cards()
 
 # Perform analysis here.
 # Calculate in BABIP
 calculate_babips(cards)
+
+# Read data from league files
+ovr_data, vl_data, vr_data = read_files_to_db(configuration["min_level"], configuration["min_year"], cards)
+
+# Get OOTP wOBA factors
+ovr_woba_factors, vl_woba_factors, vr_woba_factors = get_woba_factors(ovr_data, vl_data, vr_data)
 
 pitcher_cards = []
 batter_cards = []
