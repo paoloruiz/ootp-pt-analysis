@@ -1,5 +1,6 @@
 from data_parsing.league_levels import pt_mode_levels
 from data_parsing.individual_player import read_individual_player, merge_player_data
+from output_utils.progress.progress_bar import ProgressBar
 import os
 
 # Cards removed from packs and therefore no longer in database
@@ -11,14 +12,17 @@ def read_files_to_db(min_level, min_year, player_data):
     player_ratings_db = {}
     for card in player_data:
         player_ratings_db[str(card["CID"])] = card
-    ovr_data = _read_files(_get_matching_file_names("data/overall/", min_level, min_year), player_ratings_db)
-    vl_data = _read_files(_get_matching_file_names("data/vL/", min_level, min_year), player_ratings_db)
-    vr_data = _read_files(_get_matching_file_names("data/vR/", min_level, min_year), player_ratings_db)
+    ovr_data = _read_files(_get_matching_file_names("data/overall/", min_level, min_year), player_ratings_db, "Ovr")
+    vl_data = _read_files(_get_matching_file_names("data/vL/", min_level, min_year), player_ratings_db, "vL")
+    vr_data = _read_files(_get_matching_file_names("data/vR/", min_level, min_year), player_ratings_db, "vR")
+    print()
     return (ovr_data, vl_data, vr_data)
 
-def _read_files(file_names, player_data):
+def _read_files(file_names, player_data, file_type_name):
     db = {}
+    progress_bar = ProgressBar(len(file_names), "Reading " + file_type_name + " files")
     for file_name in file_names:
+        progress_bar.update("Reading " + file_name)
         f = open(file_name, "r")
         column_names = []
         for line in f.readlines():
@@ -49,6 +53,9 @@ def _read_files(file_names, player_data):
             else:
                 db[cid] = new_player_info
         f.close()
+
+        progress_bar.increment("Reading " + file_name)
+    progress_bar.finish()
     return db
 
 def _match_player(cid, player_data):

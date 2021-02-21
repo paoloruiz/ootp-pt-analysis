@@ -1,3 +1,5 @@
+from output_utils.progress.progress_bar import ProgressBar
+
 import statsmodels.api as sm
 
 def get_woba_factors(ovr_data, vl_data, vr_data):
@@ -5,7 +7,7 @@ def get_woba_factors(ovr_data, vl_data, vr_data):
     vl_factors = _calc_woba_factors(vl_data)
     vr_factors = _calc_woba_factors(vr_data)
     # Printing so we can check our r^2 values. Should be high
-    print("Ovr wOBA r^2 factor:", ovr_factors["r_2"], "vL wOBA r^2 factor:", vl_factors["r_2"], "vR wOBA r^2 factor:", vr_factors["r_2"])
+    print("Ovr wOBA r^2 factor:", ovr_factors["r_2"], "vL wOBA r^2 factor:", vl_factors["r_2"], "vR wOBA r^2 factor:", vr_factors["r_2"], "\n")
     return (ovr_factors, vl_factors, vr_factors)
 
 def _calc_woba_factors(player_data):
@@ -19,6 +21,9 @@ def _calc_woba_factors(player_data):
     triples = 0
     homeruns = 0
     ibb = 0
+
+    progress_bar = ProgressBar(len(player_data.keys()), "Reading wOBA values")
+
     for player in player_data.values():
         pa += player["pa"]
         walks += player["walks"]
@@ -28,10 +33,14 @@ def _calc_woba_factors(player_data):
         triples += player["triples"]
         homeruns += player["homeruns"]
         ibb += player["intentionallywalked"]
+
+        progress_bar.increment()
+
         if player["pa"] < 20:
             continue
         X.append([ 1, player["walks"], player["timeshitbypitch"], player["hits"] - (player["homeruns"] + player["doubles"] + player["triples"]), player["doubles"], player["triples"], player["homeruns"] ])
         y.append(player["woba"] * (player["pa"] - player["intentionallywalked"]))
+    progress_bar.finish("\n")
 
     results = sm.OLS(y, X).fit()
 

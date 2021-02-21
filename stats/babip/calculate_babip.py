@@ -1,9 +1,14 @@
 import statsmodels.api as sm
+from output_utils.progress.progress_bar import ProgressBar
 
 def calculate_babips(cards):
     matrix = _get_babip_matrix()
+    progress_bar = ProgressBar(len(cards), "Generating BABIPs")
     for card in cards:
         _get_babip(matrix, card)
+
+        progress_bar.increment()
+    progress_bar.finish("\n")
 
 def _get_babip_matrix():
     stats = {}

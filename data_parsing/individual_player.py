@@ -185,7 +185,7 @@ def read_individual_player(player_ratings, player_info, column_names):
         "cera": float_or_zero(player_info[column_names.index("CERA")]),
         "sp_era": _read_pitcher_data(player_type, "starter", float_or_zero(player_info[column_names.index("ERA")])),
         "rp_era": _read_pitcher_data(player_type, "reliever", float_or_zero(player_info[column_names.index("ERA")])),
-        "player_rating": player_ratings,
+        **player_ratings,
     }
 
 # Ugly method. Does what it needs to do.

@@ -68,7 +68,15 @@ data_headers = [
     "rfx",
     "spe",
     "ste",
-    "run"
+    "run",
+    "cDefense",
+    "1bDefense",
+    "2bDefense",
+    "3bDefense",
+    "ssDefense",
+    "lfDefense",
+    "cfDefense",
+    "rfDefense"
 ]
 data_freeze_col = "orig_ovr"
 data_hidden_columns = []
@@ -156,10 +164,19 @@ batter_headers = [
     "rfx",
     "spe",
     "ste",
-    "run"
+    "run",
+    "cDefense",
+    "1bDefense",
+    "2bDefense",
+    "3bDefense",
+    "ssDefense",
+    "lfDefense",
+    "cfDefense",
+    "rfDefense"
 ]
 batter_freeze_col = "bats"
 batter_hidden_columns = [
     ["t_CID", "t_CID"],
-    ["bun", "bfh"]
+    ["bun", "bfh"],
+    ["cx", "rfx"]
 ]
