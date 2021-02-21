@@ -28,3 +28,6 @@ def float_or_zero(num):
         return float(num)
     except:
         return 0
+
+def min_max(min_num, num, max_num):
+    return max(min(num, max_num), min_num)

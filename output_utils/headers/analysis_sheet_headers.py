@@ -76,7 +76,29 @@ data_headers = [
     "ssDefense",
     "lfDefense",
     "cfDefense",
-    "rfDefense"
+    "rfDefense",
+    "HBP_vL",
+    "BB_vL",
+    "K_vL",
+    "HR_vL",
+    "singles_vL",
+    "doubles_vL",
+    "triples_vL",
+    "AVG_vL",
+    "OBP_vL",
+    "OPS_vL",
+    "wOBA_vL",
+    "HBP_vR",
+    "BB_vR",
+    "K_vR",
+    "HR_vR",
+    "singles_vR",
+    "doubles_vR",
+    "triples_vR",
+    "AVG_vR",
+    "OBP_vR",
+    "OPS_vR",
+    "wOBA_vR",
 ]
 data_freeze_col = "orig_ovr"
 data_hidden_columns = []
@@ -106,11 +128,12 @@ pitcher_headers = [
     "velo",
     "stam",
     "hold",
-    "px"
+    "px",
 ]
 pitcher_freeze_col = "bats"
 pitcher_hidden_columns = [
-    ["t_CID", "t_CID"]
+    ["t_CID", "t_CID"],
+    ["gbpct", "px"]
 ]
 
 batter_headers = [
@@ -172,11 +195,12 @@ batter_headers = [
     "ssDefense",
     "lfDefense",
     "cfDefense",
-    "rfDefense"
+    "rfDefense",
+    "wOBA_vL",
+    "wOBA_vR",
 ]
 batter_freeze_col = "bats"
 batter_hidden_columns = [
     ["t_CID", "t_CID"],
-    ["bun", "bfh"],
-    ["cx", "rfx"]
+    ["bun", "run"]
 ]
