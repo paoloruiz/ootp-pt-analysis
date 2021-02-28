@@ -26,7 +26,7 @@ def generate_analysis_workbook(cards):
     full_sheet = workbook.add_worksheet("Cards")
     sheet_pbar.finish()
 
-    # TODO sort once we've actually performed analysis
+    batter_cards.sort(key=lambda pd: pd["wOBA_ft_starter"], reverse=True)
 
     # Write different stats to sheet
     generate_worksheet(batter_cards, batter_sheet, batter_headers, batter_freeze_col, batter_hidden_columns, "batter analysis")

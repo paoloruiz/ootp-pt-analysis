@@ -2,10 +2,9 @@ from stats.hitting.hitting_factors import get_factors
 from util.number_utils import min_max
 from output_utils.progress.progress_bar import ProgressBar
 
-def calculate_hitting_stats(cards, vl_data, vr_data, ovr_woba_factors, vl_woba_factors, vr_woba_factors):
+def calculate_hitting_stats(cards, vl_data, vr_data, ovr_woba_factors, vl_woba_factors, vr_woba_factors, splits):
     hitting_factors = get_factors(vl_data, vr_data)
 
-    # TODO calculate in ovr_data keys when used.
     progress_bar = ProgressBar(len(cards), "Calculate batting projections")
     for card in cards:
         factors = hitting_factors["VL"][card["bats"]]
@@ -13,6 +12,8 @@ def calculate_hitting_stats(cards, vl_data, vr_data, ovr_woba_factors, vl_woba_f
 
         factors = hitting_factors["VR"][card["bats"]]
         _set_projections(card, factors, vr_woba_factors, "vR")
+
+        _set_ovr_projections(card, splits)
 
         progress_bar.increment()
 
@@ -54,3 +55,14 @@ def _set_projections(card, factors, woba_factors, mod):
     card["OBP_" + mod] = obp
     card["OPS_" + mod] = ops
     card["wOBA_" + mod] = woba
+
+def _set_ovr_projections(card, splits):
+    position = "catcher" if card["position"] == "C" else "fielder"
+    ft_vr_split = splits["FT"]["vR%"][position]
+    vr_vr_split = splits["vR"]["vR%"][position]
+    vl_vr_split = splits["vL"]["vR%"][position]
+
+    card["wOBA_ft_starter"] = card["wOBA_vL"] * (1 - ft_vr_split) + card["wOBA_vR"] * ft_vr_split
+    card["wOBA_vR_starter"] = card["wOBA_vL"] * (1 - vr_vr_split) + card["wOBA_vR"] * vr_vr_split
+    card["wOBA_vL_starter"] = card["wOBA_vL"] * (1 - vl_vr_split) + card["wOBA_vR"] * vl_vr_split
+    pass

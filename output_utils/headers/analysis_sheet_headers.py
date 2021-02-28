@@ -99,6 +99,9 @@ data_headers = [
     "OBP_vR",
     "OPS_vR",
     "wOBA_vR",
+    "wOBA_ft_starter",
+    "wOBA_vR_starter",
+    "wOBA_vL_starter",
 ]
 data_freeze_col = "orig_ovr"
 data_hidden_columns = []
@@ -198,6 +201,9 @@ batter_headers = [
     "rfDefense",
     "wOBA_vL",
     "wOBA_vR",
+    "wOBA_ft_starter",
+    "wOBA_vR_starter",
+    "wOBA_vL_starter",
 ]
 batter_freeze_col = "bats"
 batter_hidden_columns = [

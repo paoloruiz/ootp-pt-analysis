@@ -1,5 +1,5 @@
 from output_utils.headers.stats_sheet_headers import (
-    batter_stats_headers, batter_stats_hidden_columns, batter_stats_freeze_col, 
+    batter_stats_headers, batter_stats_hidden_columns, batter_stats_freeze_col, ovr_batters_stats_headers,
     sp_stats_headers, sp_stats_hidden_columns, sp_stats_freeze_col, 
     rp_stats_headers, rp_stats_hidden_columns, rp_stats_freeze_col
 )
@@ -66,7 +66,7 @@ def generate_stats_workbook(ovr_data, vl_data, vr_data):
     # Sort cards for sheet
     sort_pbar = ProgressBar(9, "Sorted all cards")
     sort_pbar.update("Sorting ovr batter cards")
-    batter_ovr_stats_cards.sort(key=lambda pd: pd["war_600_pa"], reverse=True)
+    batter_ovr_stats_cards.sort(key=lambda pd: pd["war_600_pa_ft"], reverse=True)
     sort_pbar.increment("Sorting vL batter cards")
     batter_vl_stats_cards.sort(key=lambda pd: pd["war_600_pa"], reverse=True)
     sort_pbar.increment("Sorting vR batter cards")
@@ -85,7 +85,7 @@ def generate_stats_workbook(ovr_data, vl_data, vr_data):
     rp_vr_stats_cards.sort(key=lambda pd: pd["rp_war_per_100_ip"], reverse=True)
     sort_pbar.finish()
 
-    generate_worksheet(batter_ovr_stats_cards, batter_ovr_stats_sheet, batter_stats_headers, batter_stats_freeze_col, batter_stats_hidden_columns, "batter ovr stats")
+    generate_worksheet(batter_ovr_stats_cards, batter_ovr_stats_sheet, ovr_batters_stats_headers, batter_stats_freeze_col, batter_stats_hidden_columns, "batter ovr stats")
     generate_worksheet(batter_vl_stats_cards, batter_vl_stats_sheet, batter_stats_headers, batter_stats_freeze_col, batter_stats_hidden_columns, "batter vL stats")
     generate_worksheet(batter_vr_stats_cards, batter_vr_stats_sheet, batter_stats_headers, batter_stats_freeze_col, batter_stats_hidden_columns, "batter vR stats")
     generate_worksheet(sp_ovr_stats_cards, sp_ovr_stats_sheet, sp_stats_headers, sp_stats_freeze_col, sp_stats_hidden_columns, "sp ovr stats")

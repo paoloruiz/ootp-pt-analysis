@@ -65,6 +65,14 @@ batter_stats_freeze_col = "con"
 batter_stats_hidden_columns = [
     ["con", "rfDefense"]
 ]
+ovr_batters_stats_headers = batter_stats_headers + [
+    "batr_600_pa_ft",
+    "batr_600_pa_vr",
+    "batr_600_pa_vl",
+    "war_600_pa_ft",
+    "war_600_pa_vr",
+    "war_600_pa_vl",
+]
 
 sp_stats_headers = [
     "CID",

@@ -4,6 +4,7 @@ from stats.woba.calculate_woba import get_woba_factors
 from stats.defense.calculate_defense import calculate_defense
 from stats.league_stats.calculate_league_stats import calculate_league_stats
 from stats.hitting.calculate_hitting_stats import calculate_hitting_stats
+from stats.splits.calculate_splits import get_splits
 from data_parsing.read_db import read_files_to_db
 from output_utils.sheets.generate_analysis_workbook import generate_analysis_workbook
 from output_utils.sheets.generate_stats_workbook import generate_stats_workbook
@@ -28,16 +29,19 @@ calculate_babips(cards)
 calculate_defense(cards)
 
 # Read data from league files
-ovr_data, vl_data, vr_data = read_files_to_db(configuration["min_level"], configuration["min_year"], cards)
+ovr_data, vl_data, vr_data, ovr_data_ylt, vl_data_ylt, vr_data_ylt = read_files_to_db(configuration["min_level"], configuration["min_year"], cards)
+
+# Calculate splits on full-time/part-time fielders and catchers
+splits = get_splits(ovr_data_ylt, vl_data_ylt, vr_data_ylt, vl_data, vr_data)
 
 # Calculate league stats
-calculate_league_stats(ovr_data, vl_data, vr_data)
+calculate_league_stats(ovr_data, vl_data, vr_data, splits)
 
 # Get OOTP wOBA factors
 ovr_woba_factors, vl_woba_factors, vr_woba_factors = get_woba_factors(ovr_data, vl_data, vr_data)
 
 # Calculate hitting stats
-calculate_hitting_stats(cards, vl_data, vr_data, ovr_woba_factors, vl_woba_factors, vr_woba_factors)
+calculate_hitting_stats(cards, vl_data, vr_data, ovr_woba_factors, vl_woba_factors, vr_woba_factors, splits)
 
 # Analysis Sheet
 generate_analysis_workbook(cards)

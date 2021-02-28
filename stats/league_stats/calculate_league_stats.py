@@ -1,7 +1,7 @@
 from util.number_utils import ip_to_num
 from output_utils.progress.progress_bar import ProgressBar
 
-def calculate_league_stats(ovr_data, vl_data, vr_data):
+def calculate_league_stats(ovr_data, vl_data, vr_data, splits):
     tot_batr = 0.0
     tot_bsr = 0.0
     tot_zr = 0.0
@@ -38,9 +38,40 @@ def calculate_league_stats(ovr_data, vl_data, vr_data):
         "rp_war_per_100_ip": lambda pd: pd["rp_war"] * 100 / ip_to_num(pd["rp_ip"]) if pd["rp_ip"] > 0 else 0,
     }
 
-    _calculate_stats_per_data(ovr_data, batter_stats, pitcher_stats, "ovr")
     _calculate_stats_per_data(vl_data, batter_stats, pitcher_stats, "vL")
     _calculate_stats_per_data(vr_data, batter_stats, pitcher_stats, "vR")
+    _calculate_stats_per_data(ovr_data, batter_stats, pitcher_stats, "ovr")
+
+    progress_bar = ProgressBar(len(ovr_data.keys()), "Adding extra ovr data")
+    for card in ovr_data.values():
+        cid = str(card["t_CID"])
+        lefty_stats = vl_data[cid] if cid in vl_data else None
+        righty_stats = vr_data[cid] if cid in vr_data else None
+        if lefty_stats == None or righty_stats == None or lefty_stats["pa"] < 10 or righty_stats["pa"] < 10:
+            # Set to some default low values
+            card["batr_600_pa_ft"] = -10
+            card["batr_600_pa_vr"] = -10
+            card["batr_600_pa_vl"] = -10
+
+            card["war_600_pa_ft"] = -10
+            card["war_600_pa_vr"] = -10
+            card["war_600_pa_vl"] = -10
+            progress_bar.increment()
+            continue
+        position = "catcher" if card["position"] == "C" else "fielder"
+        ft_vr_split = splits["FT"]["vR%"][position]
+        vr_vr_split = splits["vR"]["vR%"][position]
+        vl_vr_split = splits["vL"]["vR%"][position]
+
+        card["batr_600_pa_ft"] = ft_vr_split * righty_stats["batr_600_pa"] + (1 - ft_vr_split * lefty_stats["batr_600_pa"])
+        card["batr_600_pa_vr"] = vr_vr_split * righty_stats["batr_600_pa"] + (1 - vr_vr_split * lefty_stats["batr_600_pa"])
+        card["batr_600_pa_vl"] = vl_vr_split * righty_stats["batr_600_pa"] + (1 - vl_vr_split * lefty_stats["batr_600_pa"])
+
+        card["war_600_pa_ft"] = ft_vr_split * righty_stats["war_600_pa"] + (1 - ft_vr_split * lefty_stats["war_600_pa"])
+        card["war_600_pa_vr"] = vr_vr_split * righty_stats["war_600_pa"] + (1 - vr_vr_split * lefty_stats["war_600_pa"])
+        card["war_600_pa_vl"] = vl_vr_split * righty_stats["war_600_pa"] + (1 - vl_vr_split * lefty_stats["war_600_pa"])
+        progress_bar.increment()
+    progress_bar.finish()
     print()
 
 def _calculate_stats_per_data(data, batter_lambdas, pitcher_lambdas, stats_type):
