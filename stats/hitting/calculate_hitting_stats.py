@@ -2,16 +2,16 @@ from stats.hitting.hitting_factors import get_factors
 from util.number_utils import min_max
 from output_utils.progress.progress_bar import ProgressBar
 
-def calculate_hitting_stats(cards, vl_data, vr_data, ovr_woba_factors, vl_woba_factors, vr_woba_factors, splits):
+def calculate_hitting_stats(cards, vl_data, vr_data, ovr_woba_factors, vl_woba_factors, vr_woba_factors, splits, hbp_rate):
     hitting_factors = get_factors(vl_data, vr_data)
 
     progress_bar = ProgressBar(len(cards), "Calculate batting projections")
     for card in cards:
         factors = hitting_factors["VL"][card["bats"]]
-        _set_projections(card, factors, vl_woba_factors, "vL")
+        _set_projections(card, factors, vl_woba_factors, "vL", hbp_rate)
 
         factors = hitting_factors["VR"][card["bats"]]
-        _set_projections(card, factors, vr_woba_factors, "vR")
+        _set_projections(card, factors, vr_woba_factors, "vR", hbp_rate)
 
         _set_ovr_projections(card, splits)
 
@@ -20,10 +20,9 @@ def calculate_hitting_stats(cards, vl_data, vr_data, ovr_woba_factors, vl_woba_f
     progress_bar.finish()
     print()
 
-def _set_projections(card, factors, woba_factors, mod):
-    # TODO will talk about HBP data later
+def _set_projections(card, factors, woba_factors, mod, hbp_rate):
     tot_pas = 720
-    hbp = 3
+    hbp = tot_pas * hbp_rate[card["t_CID"]] if card["t_CID"] in hbp_rate else 3
     bb = min_max(0, factors["eye"](card) * (tot_pas - hbp), tot_pas - hbp)
     k = min_max(0, factors["avk"](card) * (tot_pas - bb - hbp), tot_pas - bb - hbp)
     hr = min_max(0, factors["pow"](card) * (tot_pas - bb - k - hbp), tot_pas - bb - k - hbp)
