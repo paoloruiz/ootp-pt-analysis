@@ -7,6 +7,7 @@ from stats.defense.calculate_catcher_stats import calculate_catcher_stats
 from stats.league_stats.calculate_league_stats import calculate_league_stats
 from stats.hitting.calculate_hitting_stats import calculate_hitting_stats
 from stats.hitting.calculate_hbp_stats import get_hbp_stats
+from stats.running.calculate_running_stats import calculate_running_stats
 from stats.splits.calculate_splits import get_splits
 from data_parsing.read_db import read_files_to_db
 from data_parsing.read_tourney_data import get_stats_from_db_tourney
@@ -60,6 +61,9 @@ calculate_defensive_stats(perfect_level_tourney_db, cards)
 
 # Catcher-specific fielding stats
 calculate_catcher_stats(ovr_data, cards)
+
+# Running stats
+calculate_running_stats(ovr_data, cards)
 
 # Analysis Sheet
 generate_analysis_workbook(cards)

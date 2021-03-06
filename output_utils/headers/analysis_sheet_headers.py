@@ -121,6 +121,9 @@ data_headers = [
     "cera_effect_runs_saved",
     "expected_rto_above_avg",
     "expected_steals_given_up_above_avg",
+    "steal_attempts",
+    "caught_stealing",
+    "ubr",
 ]
 data_freeze_col = "orig_ovr"
 data_hidden_columns = []

@@ -43,7 +43,7 @@ def _set_projections(card, factors, woba_factors, mod, hbp_rate):
             + woba_factors["homeruns_factor"] * hr
         ) / tot_pas
 
-    card["HBP_" + mod] = 3
+    card["HBP_" + mod] = hbp
     card["BB_" + mod] = bb
     card["K_" + mod] = k
     card["HR_" + mod] = hr
@@ -54,6 +54,7 @@ def _set_projections(card, factors, woba_factors, mod, hbp_rate):
     card["OBP_" + mod] = obp
     card["OPS_" + mod] = ops
     card["wOBA_" + mod] = woba
+    card["bsrunchances_" + mod] = singles + hbp + bb
 
 def _set_ovr_projections(card, splits):
     position = "catcher" if card["position"] == "C" else "fielder"
@@ -61,6 +62,7 @@ def _set_ovr_projections(card, splits):
     vr_vr_split = splits["vR"]["vR%"][position]
     vl_vr_split = splits["vL"]["vR%"][position]
 
+    card["bsrunchances_ft"] = card["bsrunchances_vL"] * (1 - ft_vr_split) + card["bsrunchances_vR"] * ft_vr_split
     card["wOBA_ft_starter"] = card["wOBA_vL"] * (1 - ft_vr_split) + card["wOBA_vR"] * ft_vr_split
     card["wOBA_vR_starter"] = card["wOBA_vL"] * (1 - vr_vr_split) + card["wOBA_vR"] * vr_vr_split
     card["wOBA_vL_starter"] = card["wOBA_vL"] * (1 - vl_vr_split) + card["wOBA_vR"] * vl_vr_split
