@@ -118,6 +118,9 @@ data_headers = [
     "LF_expected_outs_above_avg",
     "CF_expected_outs_above_avg",
     "RF_expected_outs_above_avg",
+    "cera_effect_runs_saved",
+    "expected_rto_above_avg",
+    "expected_steals_given_up_above_avg",
 ]
 data_freeze_col = "orig_ovr"
 data_hidden_columns = []

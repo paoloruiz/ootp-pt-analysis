@@ -3,6 +3,7 @@ from stats.babip.calculate_babip import calculate_babips
 from stats.woba.calculate_woba import get_woba_factors
 from stats.defense.calculate_defense import calculate_defense
 from stats.defense.calculate_defensive_stats import calculate_defensive_stats
+from stats.defense.calculate_catcher_stats import calculate_catcher_stats
 from stats.league_stats.calculate_league_stats import calculate_league_stats
 from stats.hitting.calculate_hitting_stats import calculate_hitting_stats
 from stats.hitting.calculate_hbp_stats import get_hbp_stats
@@ -56,6 +57,9 @@ calculate_hitting_stats(cards, vl_data, vr_data, ovr_woba_factors, vl_woba_facto
 
 # Fielding stats
 calculate_defensive_stats(perfect_level_tourney_db, cards)
+
+# Catcher-specific fielding stats
+calculate_catcher_stats(ovr_data, cards)
 
 # Analysis Sheet
 generate_analysis_workbook(cards)
