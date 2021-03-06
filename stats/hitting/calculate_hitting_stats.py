@@ -35,7 +35,8 @@ def _set_projections(card, factors, woba_factors, mod, hbp_rate):
     obp = (hits + hr + bb + hbp) / tot_pas
     ops = obp + (singles + doubles * 2 + triples * 3 + hr * 4) / (tot_pas - hbp - bb)
     woba = (
-        woba_factors["hbp_factor"] * hbp 
+        woba_factors["woba_intcpt"]
+            + woba_factors["hbp_factor"] * hbp 
             + woba_factors["walks_factor"] * bb 
             + woba_factors["singles_factor"] * singles 
             + woba_factors["doubles_factor"] * doubles 

@@ -263,7 +263,6 @@ def calculate_defensive_stats(tourney_data, cards):
         outs_above_average_per_162[position] = _get_oaa_fn(position, regression_data, position_biz_breakdown)
         zr_per_162[position] = _get_zr_fn(position, regression_data)
 
-    # TODO remember to integrate DH stuff later
     positions = ["C", "1B", "2B", "3B", "SS", "LF", "CF", "RF"]
     progress_bar = ProgressBar(len(cards), "Calculate in defensive stats to cards")
     for card in cards:

@@ -16,7 +16,7 @@ def calculate_running_stats(ovr_data, cards):
         steal_attempts = ste_att_reg[0] + ste_att_reg[1] * card["spe"]
         success_rate = min(max(ste_suc_reg[0] + ste_suc_reg[1] * card["ste"], 1.0), 0.0)
         ubr = (ubr_reg[0] + ubr_reg[1] * card["run"]) * card["bsrunchances_ft"]
-        card["steal_attempts"] = steal_attempts * success_rate
+        card["steal_successes"] = steal_attempts * success_rate
         card["caught_stealing"] = steal_attempts * (1 - success_rate)
         card["ubr"] = ubr
         progress_bar.increment()
