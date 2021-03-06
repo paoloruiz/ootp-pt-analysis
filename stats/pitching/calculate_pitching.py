@@ -1,7 +1,8 @@
 from stats.pitching.regress_pitchers import regress_pitchers
+from stats.pitching.calculate_pitcher_hbp_stats import get_hbp_stats
 from output_utils.progress.progress_bar import ProgressBar
 
-def calculate_pitching_stats(cards, vl_data, vr_data, splits):
+def calculate_pitching_stats(cards, ovr_data, vl_data, vr_data, splits):
     sp_ratings = [
         ("stu", lambda pi: pi["sp_k"], lambda pi: pi["sp_bf"] - pi["sp_playershitbypitch"] - pi["sp_bb"]), 
         ("mov", lambda pi: pi["sp_hra"], lambda pi: pi["sp_bf"] - pi["sp_k"] - pi["sp_bb"] - pi["sp_playershitbypitch"]), 
@@ -122,6 +123,8 @@ def calculate_pitching_stats(cards, vl_data, vr_data, splits):
     print("RP VR righty ctl r2:", pitcher_regs["rp"]["VR"]["R"]["ctl_r2"])
     print()
 
+    pitcher_hbp = get_hbp_stats(ovr_data)
+
     progress_bar = ProgressBar(len(cards), "Writing fip data")
     for card in cards:
         for position in pitcher_regs.keys():
@@ -130,6 +133,8 @@ def calculate_pitching_stats(cards, vl_data, vr_data, splits):
 
                 total_bf = 950 if position == "sp" else 300
                 hbp = 7 if position == "sp" else 3
+                if card["t_CID"] in pitcher_hbp:
+                    hbp = pitcher_hbp[card["t_CID"]]
                 walks = regs["ctl"](card) * (total_bf - hbp)
                 strikeouts = regs["stu"](card) * (total_bf - hbp - walks)
                 homeruns = regs["mov"](card) * (total_bf - hbp - walks - strikeouts)

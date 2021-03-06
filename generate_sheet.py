@@ -71,7 +71,7 @@ calculate_running_stats(ovr_data, cards)
 calculate_swear(cards, ovr_woba_factors, vl_woba_factors, vr_woba_factors, splits)
 
 # Let's do some pitching now
-calculate_pitching_stats(cards, vl_data, vr_data, splits)
+calculate_pitching_stats(cards, ovr_data, vl_data, vr_data, splits)
 
 # Analysis Sheet
 generate_analysis_workbook(cards)
