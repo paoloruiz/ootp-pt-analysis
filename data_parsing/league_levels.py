@@ -12,8 +12,10 @@ pt_mode_levels = {
 # Not all tourney levels, just shows you how they might be named
 tourney_mode_levels = {
     "O": 0, # Open
+    "P": 0, # Perfect level - same as open
     "D": 1, # Diamond
     "G": 2, # Gold
     "CB": 3, # Cap Bronze
-    "HCB": 4 # Historical Cap Bronze
+    "HCB": 4, # Historical Cap Bronze
+    "B": 5, # Bronze
 }

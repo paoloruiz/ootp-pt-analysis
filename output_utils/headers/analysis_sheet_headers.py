@@ -102,6 +102,22 @@ data_headers = [
     "wOBA_ft_starter",
     "wOBA_vR_starter",
     "wOBA_vL_starter",
+    "C_expected_zr",
+    "1B_expected_zr",
+    "2B_expected_zr",
+    "3B_expected_zr",
+    "SS_expected_zr",
+    "LF_expected_zr",
+    "CF_expected_zr",
+    "RF_expected_zr",
+    "C_expected_outs_above_avg",
+    "1B_expected_outs_above_avg",
+    "2B_expected_outs_above_avg",
+    "3B_expected_outs_above_avg",
+    "SS_expected_outs_above_avg",
+    "LF_expected_outs_above_avg",
+    "CF_expected_outs_above_avg",
+    "RF_expected_outs_above_avg",
 ]
 data_freeze_col = "orig_ovr"
 data_hidden_columns = []

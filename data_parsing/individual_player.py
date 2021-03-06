@@ -30,6 +30,10 @@ def read_individual_player(player_ratings, player_info, column_names):
     if tot_balls_in_zone > 0:
         playpct = tot_plays_fielded / tot_balls_in_zone
         routinefieldpct = int_or_zero(player_info[column_names.index("BIZ-R")]) / tot_balls_in_zone
+
+    rto = 0
+    if "RTO" in column_names:
+        rto = int_or_negative(player_info[column_names.index("RTO", column_names.index("ZR"))])
     
     return {
         "team": player_info[column_names.index("TM")] + player_info[column_names.index("TM") + 1],
@@ -39,6 +43,7 @@ def read_individual_player(player_ratings, player_info, column_names):
         "pa": int(player_info[column_names.index("PA")]),
         "gs": int_or_zero(player_info[column_names.index("GS")]),
         "g": int_or_zero(player_info[column_names.index("G")]),
+        "fielding_gs": int_or_zero(player_info[column_names.index("GS", column_names.index("rWAR"))]),
         "ab": int(player_info[ab_index]),
         "woba": float(player_info[column_names.index("wOBA")]),
         "sp_bf": _read_pitcher_data(player_type, "starter", int(player_info[column_names.index("BF")])),
@@ -174,7 +179,7 @@ def read_individual_player(player_ratings, player_info, column_names):
         "assists": int_or_zero(player_info[column_names.index("A", column_names.index("FIP-"))]),
         "putouts": int_or_zero(player_info[column_names.index("PO", column_names.index("FIP-"))]),
         "stolenbaseattempts": int_or_zero(player_info[column_names.index("SBA", column_names.index("ZR"))]),
-        "runnersthrownout": int_or_negative(player_info[column_names.index("RTO", column_names.index("ZR"))]),
+        "runnersthrownout": rto,
         "errors": int_or_zero(player_info[column_names.index("E", column_names.index("FIP-"))]),
         "doubleplays": int_or_zero(player_info[column_names.index("DP", column_names.index("FIP-"))]),
         "sp_playershitbypitch": _read_pitcher_data(player_type, "starter", int(player_info[column_names.index("HP", column_names.index("BsR"))])),
@@ -216,6 +221,7 @@ def merge_player_data(old_info, new_info):
     old_info["pa"] += new_info["pa"]
     old_info["gs"] += new_info["gs"]
     old_info["g"] += new_info["g"]
+    old_info["fielding_gs"] += new_info["fielding_gs"]
     old_info["runsscored"] += new_info["runsscored"]
     old_info["rbi"] += new_info["rbi"]
     old_info["intentionallywalked"] += new_info["intentionallywalked"]
