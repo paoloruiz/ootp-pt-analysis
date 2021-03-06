@@ -151,6 +151,12 @@ data_headers = [
     "sWeAR_vR_starter_CF",
     "sWeAR_vR_starter_RF",
     "sWeAR_vR_starter_DH",
+    "sp_FIP_VL",
+    "sp_FIP_VR",
+    "sp_FIP",
+    "rp_FIP_VL",
+    "rp_FIP_VR",
+    "rp_FIP",
 ]
 data_freeze_col = "orig_ovr"
 data_hidden_columns = []
@@ -181,6 +187,12 @@ pitcher_headers = [
     "stam",
     "hold",
     "px",
+    "sp_FIP_VL",
+    "sp_FIP_VR",
+    "sp_FIP",
+    "rp_FIP_VL",
+    "rp_FIP_VR",
+    "rp_FIP",
 ]
 pitcher_freeze_col = "bats"
 pitcher_hidden_columns = [

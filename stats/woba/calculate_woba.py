@@ -71,6 +71,6 @@ def _calc_woba_factors(player_data):
         "lgwSB": wsb_results.params[2],
         "wsb_r_2": wsb_results.rsquared,
         "outs_per_run": (wsb_results.params[1] - 0.075) / 2,
-        "runs_per_win":  9 * (total_runs / ip_to_num(total_ip)) * 1.5 + 3
+        "runs_per_win":  9 * (total_runs / ip_to_num(total_ip)) * 1.5 + 3,
     }
 

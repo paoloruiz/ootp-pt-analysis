@@ -10,6 +10,7 @@ from stats.hitting.calculate_hbp_stats import get_hbp_stats
 from stats.running.calculate_running_stats import calculate_running_stats
 from stats.splits.calculate_splits import get_splits
 from stats.swear.calculate_swear import calculate_swear
+from stats.pitching.calculate_pitching import calculate_pitching_stats
 from data_parsing.read_db import read_files_to_db
 from data_parsing.read_tourney_data import get_stats_from_db_tourney
 from output_utils.sheets.generate_analysis_workbook import generate_analysis_workbook
@@ -68,6 +69,9 @@ calculate_running_stats(ovr_data, cards)
 
 # Calculate sWeAR
 calculate_swear(cards, ovr_woba_factors, vl_woba_factors, vr_woba_factors, splits)
+
+# Let's do some pitching now
+calculate_pitching_stats(cards, vl_data, vr_data, splits)
 
 # Analysis Sheet
 generate_analysis_workbook(cards)

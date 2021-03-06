@@ -132,11 +132,11 @@ def _get_pitcher_splits(vl_data, vr_data):
             rrhp_v_rhb += card["rp_bf"]
 
     return {
-        "lefty": {
+        "L": {
             "starter": slhp_v_rhb / (slhp_v_lhb + slhp_v_rhb),
             "reliever": rlhp_v_rhb / (rlhp_v_lhb + rlhp_v_rhb)
         },
-        "righty": {
+        "R": {
             "starter": srhp_v_rhb / (srhp_v_lhb + srhp_v_rhb),
             "reliever": rrhp_v_rhb / (rrhp_v_lhb + rrhp_v_rhb)
         }

@@ -27,6 +27,7 @@ def generate_analysis_workbook(cards):
     sheet_pbar.finish()
 
     batter_cards.sort(key=lambda pd: pd["wOBA_ft_starter"], reverse=True)
+    pitcher_cards.sort(key=lambda pd: pd["sp_FIP"])
 
     # Write different stats to sheet
     generate_worksheet(batter_cards, batter_sheet, batter_headers, batter_freeze_col, batter_hidden_columns, "batter analysis")
