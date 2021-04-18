@@ -61,7 +61,7 @@ def _get_potential_catchers(ovr_data, vl_data, vr_data):
         if pot_catchers[0]["gs"] > 90 and (gs_stats_c_one["vl_pa"] > gs_stats_c_two["vl_pa"]) and (gs_stats_c_one["vr_pa"] > gs_stats_c_two["vr_pa"]):
             full_time_candidates.append(_get_gs_stats(pot_catchers[0], year_league_team, ovr_data, vl_data, vr_data))
         else:
-            if vl_data[year_league_team][pot_catchers[0]["CID"]]["gs"] > vl_data[year_league_team][pot_catchers[1]["cid"]]["gs"]:
+            if vl_data[year_league_team][pot_catchers[0]["CID"]]["gs"] > vl_data[year_league_team][pot_catchers[1]["CID"]]["gs"]:
                 vl_candidates.append(_get_gs_stats(pot_catchers[0], year_league_team, ovr_data, vl_data, vr_data))
                 vr_candidates.append(_get_gs_stats(pot_catchers[1], year_league_team, ovr_data, vl_data, vr_data))
             else:
